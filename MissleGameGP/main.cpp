@@ -18,7 +18,9 @@ int main()
 	myMissle.target = { 200, 200 };
 	short selector = 0;
 	short launchCode = 0;
-	while (true)
+	bool win = false;
+	short launchInput = 0;
+	while (win != true)
 	{
 		while (selector < 1 || selector > 2)								// Picking the bomb type
 		{
@@ -36,13 +38,15 @@ int main()
 		selector = 0;														// Reset it
 		myMissle.target = { rand() % 800, rand() % 800};					// Random position
 		std::cout << "Enemy Target is located here" << std::endl;
-		myMissle.target.coordinates.print();	
-		while (launchCode != 3278)											// Launch code, could be changed into a game like processes
+		myMissle.target.coordinates.print();
+		launchCode = rand() % 8000 + 1000;
+		while (launchInput != launchCode)											// Launch code, could be changed into a game like processes
 		{	
-			std::cout << "To Arm missle, enter code 3278" << std::endl;
-			std::cin >> launchCode;
+			std::cout << "To Arm missle, enter code " << launchCode << std::endl;
+			std::cin >> launchInput;
 		}
 		myMissle.arm();														// Arm the missile
+		launchInput = 0;														// Reset it
 
 		std::cout << "Shot Fired \nCurrently firing" << std::endl;
 		while (myMissle.armed == true)										// If armed update
@@ -58,9 +62,11 @@ int main()
 			{
 				myMissle.arm();												// Or if you hit
 				std::cout << "You have hit the target hurray" << std::endl;
+				win = false;
 			}
 		}
 	}
-
+	std::cout << "You have won, Game Over" << std::endl;
+	system("PAUSE");
 	return 0;
 }
