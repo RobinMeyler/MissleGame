@@ -20,6 +20,9 @@ int main()
 	short launchCode = 0;
 	bool win = false;
 	short launchInput = 0;
+	short xMove = 0;
+	short yMove = 0;
+
 	while (win != true)
 	{
 		while (selector < 1 || selector > 2)								// Picking the bomb type
@@ -39,6 +42,24 @@ int main()
 		myMissle.target = { rand() % 800, rand() % 800};					// Random position
 		std::cout << "Enemy Target is located here" << std::endl;
 		myMissle.target.coordinates.print();
+		std::cout << std::endl;
+
+		std::cout << "Your Coords are: X: " << xMove << " Y: " << yMove << std::endl;
+		std::cout << "Would you like to move your tank?" << std::endl;
+		std::cout << "How much would you like to move on the X axis?  (-100 -> 100)\n ::Larger values will be taken as 0::" << std::endl;
+		std::cin >> xMove;
+		std::cout << "How much would you like to move on the Y axis< (-100 -> 100)\n ::Larger values will be taken as 0::" << std::endl;
+		std::cin >> yMove;
+		if (xMove > -101 && xMove < 101)
+		{
+			myMissle.coordinates.x = myMissle.coordinates.x + xMove;				// Change the position of the tank if the values are correct
+		}
+		if (xMove > -101 && xMove < 101)
+		{
+			myMissle.coordinates.y = myMissle.coordinates.x + yMove;
+		}
+		std::cout << "New Coords are: X: " << xMove << " Y: " << yMove << std::endl;
+	
 		launchCode = rand() % 8000 + 1000;
 		while (launchInput != launchCode)											// Launch code, could be changed into a game like processes
 		{	
@@ -56,11 +77,13 @@ int main()
 			if (myMissle.coordinates.x > myMissle.target.coordinates.x && myMissle.coordinates.y > myMissle.target.coordinates.y)
 			{
 				myMissle.arm();												// Reset missile if confirmed miss
+				std::cout << std::endl;
 				std::cout << "Missle has missed the target" << std::endl;
 			}
 			else if (myMissle.coordinates.x == myMissle.target.coordinates.x && myMissle.coordinates.y == myMissle.target.coordinates.y)
 			{
 				myMissle.arm();												// Or if you hit
+				std::cout << std::endl;
 				std::cout << "You have hit the target hurray" << std::endl;
 				win = false;
 			}
